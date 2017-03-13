@@ -1,0 +1,22 @@
+sudo: required
+
+language: node_js
+node_js:
+  - "6"
+
+services:
+  - docker
+
+install:
+  - npm install
+
+script:
+  - npm test
+  - npm run build
+
+after_success:
+  - docker build -t tripdubroot/playoffapp -f build/Dockerfile .
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push tripdubroot/playoffapp;
+    fi
