@@ -15,8 +15,8 @@ script:
   - npm run build
 
 after_success:
-  - docker build -t tripdubroot/playoffapp -f build/Dockerfile .
+  - docker build -t devpixel-on.azurecr.io/playoffapp:$TRAVIS_BUILD_NUMBER -f build/Dockerfile .
   - if [ "$TRAVIS_BRANCH" == "cicd" ]; then
-    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    docker push tripdubroot/playoffapp;
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" devpixel-on.azurecr.io;
+    docker push devpixel-on.azurecr.io/playoffapp:$TRAVIS_BUILD_NUMBER;
     fi
