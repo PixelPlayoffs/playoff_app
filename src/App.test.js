@@ -12,7 +12,7 @@ it('renders without crashing', () => {
   ];
   let tally = [
     '98',
-    '103'
+    '102'
   ];
 
   ReactDOM.render(<App 
