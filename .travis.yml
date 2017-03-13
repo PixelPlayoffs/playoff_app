@@ -16,7 +16,7 @@ script:
 
 after_success:
   - docker build -t tripdubroot/playoffapp -f build/Dockerfile .
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+  - if [ "$TRAVIS_BRANCH" == "cicd" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     docker push tripdubroot/playoffapp;
     fi
