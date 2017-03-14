@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import * as bs from 'react-bootstrap';
 import './App.css';
+import Voting from './Voting';
+import Winner from './Winner';
 
 class App extends Component {
+  getVideoSource() {
+      const tmpSource = '//amssamples.streaming.mediaservices.windows.net/91492735-c523-432b-ba01-faba6c2206a2/AzureMediaServicesPromo.ism/manifest';
+      return this.props.videoSource || tmpSource;
+  }
   componentDidMount() {
     const script = document.createElement("script");
     script.text = `
@@ -15,7 +21,7 @@ class App extends Component {
             poster: ""
         };
         var myPlayer = amp("azuremediaplayer", myOptions);
-        myPlayer.src([{ src: "` + this.props.videoSource + `", type: "application/vnd.ms-sstr+xml" }, ]);
+        myPlayer.src([{ src: "` + this.getVideoSource() + `", type: "application/vnd.ms-sstr+xml" }, ]);
     })();
     `
     document.body.appendChild(script);
@@ -35,17 +41,17 @@ class App extends Component {
             <div className="col-md-1">
             </div>
 
-            <div className="col-md-5">
+            <div className="tally col-md-5">
               <h4>{this.props.match[0]} Tally</h4>
               <span>{this.props.tally[0]}</span>
             </div>
 
-            <div className="col-md-1">
-            </div>
-
-            <div className="col-md-5">
+            <div className="tally col-md-5">
               <h4>{this.props.match[1]} Tally</h4>
               <span>{this.props.tally[1]}</span>
+            </div>
+
+            <div className="col-md-1">
             </div>
           </div>
           <p>&nbsp;</p>
@@ -54,22 +60,11 @@ class App extends Component {
             <video id="azuremediaplayer" className="center azuremediaplayer amp-default-skin amp-big-play-centered" tabIndex="0"> </video>
           </bs.Jumbotron>
 
-          <div className="row">
-            <div className="col-md-1">
-            </div>
-
-            <div className="col-md-5">
-              <bs.Button className="btn btn-primary btn-lg" type="submit">Vote for {this.props.match[0]}</bs.Button>
-            </div>
-
-            <div className="col-md-1">
-            </div>
-
-            <div className="col-md-5">
-              <bs.Button className="btn btn-primary btn-lg" type="submit">Vote for {this.props.match[1]}</bs.Button>
-            </div>
-          </div>
-
+          {this.props.winner ?
+            <Winner ref="winner" winner={this.props.winner} /> :
+            <Voting {...this.props} />
+          }
+          
           <p>&nbsp;</p>
 
           <footer className="footer">
