@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import {List} from 'immutable';
 import {
   renderIntoDocument,
   scryRenderedDOMComponentsWithTag,
@@ -137,5 +138,22 @@ describe('Voting', () => {
 
     const winner = ReactDOM.findDOMNode(wrapper.refs.winner);
     expect(winner.textContent).toContain('Winner is Artist One');
+  });
+
+  it ('does update DOM when prop changes', () => {
+    const match = List.of('Artist One', 'Artist Two');
+    const tally = List.of('98', '102');
+    const container = document.createElement('div');
+    let wrapper = ReactDOM.render(<App match={match} tally={tally} />, container);
+    
+    let firstButton = scryRenderedDOMComponentsWithTag(wrapper, 'button')[0];
+    expect(firstButton.textContent).toEqual('Vote for Artist One');
+
+    const newMatch = match.set(0, 'Artist Three');
+    wrapper = ReactDOM.render(<App match={newMatch} tally={tally} />, container);
+
+    firstButton = scryRenderedDOMComponentsWithTag(wrapper, 'button')[0];
+    expect(firstButton.textContent).toEqual('Vote for Artist Three');
+    expect(match.get(0)).toEqual('Artist One');
   });
 });
