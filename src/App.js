@@ -3,6 +3,7 @@ import * as bs from 'react-bootstrap';
 import './App.css';
 import Voting from './Voting';
 import Winner from './Winner';
+import logo from './logo.png';
 
 class App extends Component {
   getVideoSource() {
@@ -34,7 +35,7 @@ class App extends Component {
             <bs.Nav bsStyle="pills" className="pull-right">
               <bs.NavItem href="./signin.html" role="presentation">Battle Board</bs.NavItem>
             </bs.Nav>
-            <h3 className="text-muted">Battle Voting</h3>
+            <img src={logo} className="App-logo" alt="logo" height="45" width="450" />
           </div>
 
           <div className="row">
