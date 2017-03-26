@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Voting from './Voting';
 import {List} from 'immutable';
 import {
   renderIntoDocument,
@@ -24,7 +24,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    ReactDOM.render(<App 
+    ReactDOM.render(<Voting 
                       videoSource={videoSource} 
                       match={match} 
                       tally={tally} />,
@@ -41,7 +41,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<App match={match} tally={tally} />);
+    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} />);
     const buttons = scryRenderedDOMComponentsWithTag(wrapper, 'button');
 
     expect(buttons.length).toEqual(2);
@@ -59,7 +59,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<App match={match} tally={tally} />);
+    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} />);
     const video = findRenderedDOMComponentWithTag(wrapper, 'video');
 
     expect(video.hasAttribute('id')).toEqual(true);
@@ -75,7 +75,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<App match={match} tally={tally} />);
+    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} />);
     const tallyFields = scryRenderedDOMComponentsWithClass(wrapper, 'tally');
 
     expect(tallyFields.length).toEqual(2);
@@ -96,7 +96,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<App match={match} tally={tally} vote={vote} />);
+    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} vote={vote} />);
     const buttons = scryRenderedDOMComponentsWithTag(wrapper, 'button');
     Simulate.click(buttons[0]);
 
@@ -113,7 +113,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<App match={match} tally={tally} votingDisabled={true} />);
+    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} votingDisabled={true} />);
     const buttons = scryRenderedDOMComponentsWithTag(wrapper, 'button');
 
     expect(buttons.length).toEqual(2);
@@ -131,7 +131,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<App match={match} tally={tally} winner={match[0]} />);
+    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} winner={match[0]} />);
     
     const buttons = scryRenderedDOMComponentsWithTag(wrapper, 'button');
     expect(buttons.length).toEqual(0);
@@ -144,13 +144,13 @@ describe('Voting', () => {
     const match = List.of('Artist One', 'Artist Two');
     const tally = List.of('98', '102');
     const container = document.createElement('div');
-    let wrapper = ReactDOM.render(<App match={match} tally={tally} />, container);
+    let wrapper = ReactDOM.render(<Voting match={match} tally={tally} />, container);
     
     let firstButton = scryRenderedDOMComponentsWithTag(wrapper, 'button')[0];
     expect(firstButton.textContent).toEqual('Vote for Artist One');
 
     const newMatch = match.set(0, 'Artist Three');
-    wrapper = ReactDOM.render(<App match={newMatch} tally={tally} />, container);
+    wrapper = ReactDOM.render(<Voting match={newMatch} tally={tally} />, container);
 
     firstButton = scryRenderedDOMComponentsWithTag(wrapper, 'button')[0];
     expect(firstButton.textContent).toEqual('Vote for Artist Three');
