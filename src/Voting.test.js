@@ -15,7 +15,7 @@ describe('Voting', () => {
     const div = document.createElement('div');
 
     let videoSource = '//amssamples.streaming.mediaservices.windows.net/91492735-c523-432b-ba01-faba6c2206a2/AzureMediaServicesPromo.ism/manifest';
-    let match = [
+    let seats = [
       'Artist One',
       'Artist Two'
     ];
@@ -26,13 +26,13 @@ describe('Voting', () => {
 
     ReactDOM.render(<Voting 
                       videoSource={videoSource} 
-                      match={match} 
+                      seats={seats} 
                       tally={tally} />,
     div);
   });
 
   it ('renders with buttons', () => {
-    let match = [
+    let seats = [
       'Artist One',
       'Artist Two'
     ];
@@ -41,7 +41,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} />);
+    const wrapper = renderIntoDocument(<Voting seats={seats} tally={tally} />);
     const buttons = scryRenderedDOMComponentsWithTag(wrapper, 'button');
 
     expect(buttons.length).toEqual(2);
@@ -50,7 +50,7 @@ describe('Voting', () => {
   });
 
   it ('renders with video', () => {
-    let match = [
+    let seats = [
       'Artist One',
       'Artist Two'
     ];
@@ -59,14 +59,14 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} />);
+    const wrapper = renderIntoDocument(<Voting seats={seats} tally={tally} />);
     const video = findRenderedDOMComponentWithTag(wrapper, 'video');
 
     expect(video.hasAttribute('id')).toEqual(true);
   });
 
   it ('renders with tally fields', () => {
-    let match = [
+    let seats = [
       'Artist One',
       'Artist Two'
     ];
@@ -75,19 +75,19 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} />);
+    const wrapper = renderIntoDocument(<Voting seats={seats} tally={tally} />);
     const tallyFields = scryRenderedDOMComponentsWithClass(wrapper, 'tally');
 
-    expect(tallyFields.length).toEqual(2);
-    expect(tallyFields[0].textContent).toEqual('Artist One Tally98');
-    expect(tallyFields[1].textContent).toEqual('Artist Two Tally102');
+    expect(tallyFields.length).toEqual(4);
+    expect(tallyFields[2].textContent).toEqual('98');
+    expect(tallyFields[3].textContent).toEqual('102');
   });
 
   it ('invokes callback when button is clicked', () => {
     let votedWith;
     const vote = (entry) => votedWith = entry;
 
-    let match = [
+    let seats = [
       'Artist One',
       'Artist Two'
     ];
@@ -96,7 +96,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} vote={vote} />);
+    const wrapper = renderIntoDocument(<Voting seats={seats} tally={tally} vote={vote} />);
     const buttons = scryRenderedDOMComponentsWithTag(wrapper, 'button');
     Simulate.click(buttons[0]);
 
@@ -104,7 +104,7 @@ describe('Voting', () => {
   });
 
   it ('disables buttons when user has voted', () => {
-    let match = [
+    let seats = [
       'Artist One',
       'Artist Two'
     ];
@@ -113,7 +113,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} votingDisabled={true} />);
+    const wrapper = renderIntoDocument(<Voting seats={seats} tally={tally} votingDisabled={true} />);
     const buttons = scryRenderedDOMComponentsWithTag(wrapper, 'button');
 
     expect(buttons.length).toEqual(2);
@@ -122,7 +122,7 @@ describe('Voting', () => {
   });
 
   it ('renders just the winner when there is one', () => {
-    let match = [
+    let seats = [
       'Artist One',
       'Artist Two'
     ];
@@ -131,7 +131,7 @@ describe('Voting', () => {
       '102'
     ];
 
-    const wrapper = renderIntoDocument(<Voting match={match} tally={tally} winner={match[0]} />);
+    const wrapper = renderIntoDocument(<Voting seats={seats} tally={tally} winner={seats[0]} />);
     
     const buttons = scryRenderedDOMComponentsWithTag(wrapper, 'button');
     expect(buttons.length).toEqual(0);
@@ -141,19 +141,19 @@ describe('Voting', () => {
   });
 
   it ('does update DOM when prop changes', () => {
-    const match = List.of('Artist One', 'Artist Two');
+    const seats = List.of('Artist One', 'Artist Two');
     const tally = List.of('98', '102');
     const container = document.createElement('div');
-    let wrapper = ReactDOM.render(<Voting match={match} tally={tally} />, container);
+    let wrapper = ReactDOM.render(<Voting seats={seats} tally={tally} />, container);
     
     let firstButton = scryRenderedDOMComponentsWithTag(wrapper, 'button')[0];
     expect(firstButton.textContent).toEqual('Vote for Artist One');
 
-    const newMatch = match.set(0, 'Artist Three');
-    wrapper = ReactDOM.render(<Voting match={newMatch} tally={tally} />, container);
+    const newseats = seats.set(0, 'Artist Three');
+    wrapper = ReactDOM.render(<Voting seats={newseats} tally={tally} />, container);
 
     firstButton = scryRenderedDOMComponentsWithTag(wrapper, 'button')[0];
     expect(firstButton.textContent).toEqual('Vote for Artist Three');
-    expect(match.get(0)).toEqual('Artist One');
+    expect(seats.get(0)).toEqual('Artist One');
   });
 });

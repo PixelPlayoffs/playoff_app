@@ -3,7 +3,7 @@ import * as bs from 'react-bootstrap';
 
 class Vote extends Component {
     getMatchSeats() {
-        return this.props.match || [];
+        return this.props.seats || [];
     }
     isDisabled() {
         return this.props.votingDisabled;

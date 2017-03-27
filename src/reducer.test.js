@@ -10,57 +10,85 @@ describe('reducer', () => {
                     seats: List.of('Artist One', 'Artist Two'),
                     tally: Map({'Artist One': 1})
                 }),
+                videoSource: '',
                 currentRound: 'quarterFinals'
             })
         };
-        const nextState = new Reducer(state, action);
+        const nextState = Reducer.reduce(state, action);
 
         expect(nextState).toEqual(fromJS({
             vote: {
                 seats: ['Artist One', 'Artist Two'],
                 tally: {'Artist One': 1}
             },
+            videoSource: '',
             currentRound: 'quarterFinals'
         }));
     });
 
     it('handles SET_SEATS with undefined state', () => {
+        const action = {type: 'SET_SEATS', state: {
+                vote: {
+                    seats: ['Artist One', 'Artist Two'],
+                    tally: {'Artist One': 1}
+                },
+                videoSource: '',
+                currentRound: 'quarterFinals'
+            }
+        };
+        const nextState = Reducer.reduce(undefined, action);
+
+        expect(nextState).toEqual(fromJS({
+            vote: {
+                seats: ['Artist One', 'Artist Two'],
+                tally: {'Artist One': 1}
+            },
+            videoSource: '',
+            currentRound: 'quarterFinals'
+        }));
+    });
+
+    it('handles SET_SEATS with plain JS', () => {
         const state = Round();
         const action = {type: 'SET_SEATS', state: {
                 vote: {
                     seats: ['Artist One', 'Artist Two'],
                     tally: {'Artist One': 1}
                 },
+                videoSource: '',
                 currentRound: 'quarterFinals'
             }
         };
-        const nextState = new Reducer(state, action);
+        const nextState = Reducer.reduce(state, action);
 
         expect(nextState).toEqual(fromJS({
             vote: {
                 seats: ['Artist One', 'Artist Two'],
                 tally: {'Artist One': 1}
             },
+            videoSource: '',
             currentRound: 'quarterFinals'
         }));
     });
 
-    it('handles SET_SEATS with plain JS', () => {
-        const action = {type: 'SET_SEATS', state: {
-                vote: {
-                    seats: ['Artist One', 'Artist Two'],
-                    tally: {'Artist One': 1}
-                },
-                currentRound: 'quarterFinals'
-            }
-        };
-        const nextState = new Reducer(undefined, action);
+    it('creates a tally for the voted seat', () => {
+        const state = Map({
+            vote: Map({
+                seats: List.of('Artist One', 'Artist Two'),
+                tally: Map()
+            }),
+            videoSource: '',
+            currentRound: 'quarterFinals'
+        });
+        const action = {type: 'VOTE', entry: 'Artist One'};
+        const nextState = Reducer.reduce(state, action);
 
         expect(nextState).toEqual(fromJS({
             vote: {
                 seats: ['Artist One', 'Artist Two'],
                 tally: {'Artist One': 1}
             },
+            videoSource: '',
             currentRound: 'quarterFinals'
         }));
     });

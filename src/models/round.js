@@ -6,6 +6,7 @@ export default () => {
                 seats: List(),
                 tally: Map()
             }),
+            videoSource: '',
             currentRound: 'quarterFinals'
         });
 };

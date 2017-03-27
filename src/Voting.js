@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import * as bs from 'react-bootstrap';
+import {connect} from 'react-redux';
 import './Voting.css';
 import Vote from './Vote';
 import Winner from './Winner';
 import logo from './logo.png';
+import * as actions from './Actions';
 
 class Voting extends Component {
+  getMatchSeats() {
+      return this.props.seats || [];
+  }
+  getMatchTallys() {
+      return this.props.tally || [];
+  }
   getVideoSource() {
       const tmpSource = '//amssamples.streaming.mediaservices.windows.net/91492735-c523-432b-ba01-faba6c2206a2/AzureMediaServicesPromo.ism/manifest';
       return this.props.videoSource || tmpSource;
@@ -42,17 +50,27 @@ class Voting extends Component {
             <div className="col-md-1">
             </div>
 
-            <div className="tally col-md-5">
-              <h4>{this.props.match[0]} Tally</h4>
-              <span>{this.props.tally[0]}</span>
+          {this.getMatchSeats().map(entry =>
+            <div key={entry} className="tally col-md-5">
+              <h4 key={entry}>{entry} Tally</h4>
             </div>
+          )}
 
-            <div className="tally col-md-5">
-              <h4>{this.props.match[1]} Tally</h4>
-              <span>{this.props.tally[1]}</span>
+          <div className="col-md-1">
             </div>
+          </div>
 
+          <div className="row">
             <div className="col-md-1">
+            </div>
+
+          {this.getMatchTallys().map(entry =>
+            <div key={entry} className="tally col-md-5">
+              <h4 key={entry}>{entry}</h4>
+            </div>
+          )}
+
+          <div className="col-md-1">
             </div>
           </div>
           <p>&nbsp;</p>
@@ -76,5 +94,16 @@ class Voting extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    seats: state.getIn(['vote', 'seats']),
+    winner: state.get('winner'),
+    tally: state.getIn(['vote', 'tally']),
+    videoSource: state.get('videoSource')
+  };
+}
+
+export const VotingContainer = connect(mapStateToProps, actions)(Voting);
 
 export default Voting;
