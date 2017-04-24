@@ -5,7 +5,7 @@ import './Voting.css';
 import Vote from './Vote';
 import Winner from './Winner';
 import logo from './logo.png';
-import * as actions from './Actions';
+import * as Actions from './Actions';
 
 class Voting extends Component {
   getMatchSeats() {
@@ -52,7 +52,7 @@ class Voting extends Component {
 
           {this.getMatchSeats().map(entry =>
             <div key={entry} className="tally col-md-5">
-              <h4 key={entry}>{entry} Tally</h4>
+              <h4 key={entry}>{entry} Score</h4>
             </div>
           )}
 
@@ -96,17 +96,17 @@ class Voting extends Component {
 }
 
 function mapStateToProps(state) {
-  let seats = state.getIn(['vote', 'seats']);
+  let tally = state.getIn(['vote', 'tally']);
 
   return {
-    seats: seats,
+    seats: state.getIn(['vote', 'seats']),
     winner: state.getIn(['winner']),
-    tally: state.getIn(['vote', 'tally']),
+    tally: tally,
     currentRound: state.get('currentRound')
     //videoSource: '', // state.get('videoSource')
   };
 }
 
-export const VotingContainer = connect(mapStateToProps, actions)(Voting);
+export const VotingContainer = connect(mapStateToProps, Actions)(Voting);
 
 export default Voting;

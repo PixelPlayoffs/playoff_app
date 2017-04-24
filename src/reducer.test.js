@@ -32,7 +32,12 @@ describe('reducer', () => {
                     seats: ['Artist One', 'Artist Two'],
                     tally: {'Artist One': 1}
                 },
-                videoSource: '',
+                round: {
+                    quarterFinals: [],
+                    simiFinals: [],
+                    finals: [],
+                    winner: []
+                },
                 currentRound: 'quarterFinals'
             }
         };
@@ -43,7 +48,12 @@ describe('reducer', () => {
                 seats: ['Artist One', 'Artist Two'],
                 tally: {'Artist One': 1}
             },
-            videoSource: '',
+            round: {
+                quarterFinals: [],
+                simiFinals: [],
+                finals: [],
+                winner: []
+            },
             currentRound: 'quarterFinals'
         }));
     });

@@ -20,7 +20,7 @@ function vote(state, entry) {
 }
 
 class Reducer {
-    reduce(state = Round(), action) {
+    reduce(state = Tournament(), action) {
         switch (action.type) {
             case 'SET_SEATS':
                 return setState(state, action.state);

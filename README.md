@@ -1,4 +1,4 @@
-# playoff_app
+# Tournament Front End Web Site for Voting
 Web front for Tournament voting and live stream.
 
 ## Technologies

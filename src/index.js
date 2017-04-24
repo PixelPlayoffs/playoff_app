@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import io from 'socket.io-client';
 import {Map, List} from 'immutable';
 import Reducer from './Reducer';
-import Actions from './Actions';
+import * as Actions from './Actions';
 import middleware from './middleware';
 import {VotingContainer} from './Voting';
 
