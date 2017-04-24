@@ -1,6 +1,6 @@
 class Actions {
     setState(state) {
-        return {type: 'SET_STATE', state};
+        return {type: 'SET_SEATS', state};
     }
 
     vote(entry) {

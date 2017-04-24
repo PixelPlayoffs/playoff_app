@@ -96,11 +96,14 @@ class Voting extends Component {
 }
 
 function mapStateToProps(state) {
+  let seats = state.getIn(['vote', 'seats']);
+
   return {
-    seats: state.getIn(['vote', 'seats']),
-    winner: state.get('winner'),
+    seats: seats,
+    winner: state.getIn(['winner']),
     tally: state.getIn(['vote', 'tally']),
-    videoSource: state.get('videoSource')
+    currentRound: state.get('currentRound')
+    //videoSource: '', // state.get('videoSource')
   };
 }
 

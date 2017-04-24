@@ -1,6 +1,8 @@
 import Round from './models/round';
+import Tournament from './models/tournament'; 
 
 function setState(state, newState) {
+    console.log(JSON.stringify(state));
     return state.merge(newState);
 }
 
