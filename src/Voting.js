@@ -79,7 +79,7 @@ class Voting extends Component {
             <video id="azuremediaplayer" className="center azuremediaplayer amp-default-skin amp-big-play-centered" tabIndex="0"> </video>
           </bs.Jumbotron>
 
-          {this.props.winner ?
+          {this.props.currentRound === 'winner' ?
             <Winner ref="winner" winner={this.props.winner} /> :
             <Vote {...this.props} />
           }
@@ -100,7 +100,7 @@ function mapStateToProps(state) {
 
   return {
     seats: state.getIn(['vote', 'seats']),
-    winner: state.getIn(['winner']),
+    winner: state.getIn(['round', 'winner']),
     tally: tally,
     currentRound: state.get('currentRound')
     //videoSource: '', // state.get('videoSource')
