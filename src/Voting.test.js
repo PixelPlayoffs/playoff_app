@@ -130,8 +130,9 @@ describe('Voting', () => {
       '98',
       '102'
     ];
+    let win = 'winner';
 
-    const wrapper = renderIntoDocument(<Voting seats={seats} tally={tally} winner={seats[0]} />);
+    const wrapper = renderIntoDocument(<Voting currentRound={win} seats={seats} tally={tally} winner={seats[0]} />);
     
     const buttons = scryRenderedDOMComponentsWithTag(wrapper, 'button');
     expect(buttons.length).toEqual(0);
