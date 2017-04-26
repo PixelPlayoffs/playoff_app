@@ -4,17 +4,13 @@ import {HashRouter as Router, Route} from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import io from 'socket.io-client';
-import {Map, List} from 'immutable';
+// import {Map, List} from 'immutable';
 import Reducer from './Reducer';
 import * as Actions from './Actions';
 import middleware from './middleware';
 import {VotingContainer} from './Voting';
 
 const socket = io(`${location.protocol}//${location.hostname}:8090`);
-
-socket.on('state', state => 
-  store.dispatch(Actions.setState(state))
-);
 
 // TODO: Change Streaming Units link for AMP
 // TODO: Add Timer
@@ -26,6 +22,10 @@ const createStoreWithMiddleware = applyMiddleware(
 const store = createStoreWithMiddleware(
   Reducer.reduce,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+socket.on('state', state => 
+  store.dispatch(Actions.setState(state))
 );
 
 ReactDOM.render(
