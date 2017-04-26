@@ -16,6 +16,9 @@ socket.on('state', state =>
   store.dispatch(Actions.setState(state))
 );
 
+// TODO: Change Streaming Units link for AMP
+// TODO: Add Timer
+
 const createStoreWithMiddleware = applyMiddleware(
   middleware(socket)
 )(createStore);
