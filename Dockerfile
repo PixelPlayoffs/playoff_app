@@ -1,5 +1,5 @@
 FROM nginx:1.11.10-alpine
-
-COPY ./build /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
+COPY ./build .
 
 # this works great
