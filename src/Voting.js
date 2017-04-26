@@ -60,7 +60,7 @@ class Voting extends Component {
         <bs.Grid>
           <div className="header clearfix">
             <bs.Nav bsStyle="pills" className="pull-right">
-              <bs.NavItem href="./signin.html" role="presentation">Battle Board</bs.NavItem>
+              {/*<bs.NavItem href="./signin.html" role="presentation">Battle Board</bs.NavItem>*/}
             </bs.Nav>
             <img src={logo} className="App-logo" alt="logo" height="45" width="450" />
           </div>
