@@ -15,8 +15,27 @@ class Voting extends Component {
       return this.props.tally || [];
   }
   getVideoSource() {
-      const tmpSource = '//amssamples.streaming.mediaservices.windows.net/91492735-c523-432b-ba01-faba6c2206a2/AzureMediaServicesPromo.ism/manifest';
+      const tmpSource = 'http://localhost';
       return this.props.videoSource || tmpSource;
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.vidSourceSwap) {
+      const script = document.createElement("script");
+      script.text = `
+        (function(){
+        var myOptions = {
+              autoplay: false,
+              controls: true,
+              width: "480",
+              height: "270",
+              poster: ""
+          };
+          var myPlayer = amp("azuremediaplayer", myOptions);
+          myPlayer.src([{ src: "` + nextProps.videoSource + `", type: "application/vnd.ms-sstr+xml" }, ]);
+      })();
+      `
+      document.body.appendChild(script);
+    }
   }
   componentDidMount() {
     const script = document.createElement("script");
@@ -44,6 +63,10 @@ class Voting extends Component {
               <bs.NavItem href="./signin.html" role="presentation">Battle Board</bs.NavItem>
             </bs.Nav>
             <img src={logo} className="App-logo" alt="logo" height="45" width="450" />
+          </div>
+
+          <div className="row">
+            <bs.ProgressBar striped bsStyle="warning" now={this.props.timer} />
           </div>
 
           <div className="row">
@@ -96,14 +119,15 @@ class Voting extends Component {
 }
 
 function mapStateToProps(state) {
-  let tally = state.getIn(['vote', 'tally']);
-
   return {
     seats: state.getIn(['vote', 'seats']),
     winner: state.getIn(['round', 'winner']),
-    tally: tally,
-    currentRound: state.get('currentRound')
-    //videoSource: '', // state.get('videoSource')
+    tally: state.getIn(['vote', 'tally']),
+    currentRound: state.get('currentRound'),
+    videoSource: state.get('videoSource'),
+    vidSourceSwap: state.get('vidSourceSwap'),
+    votingDisabled: state.get('votingDisabled'),
+    timer: state.get('timer')
   };
 }
 

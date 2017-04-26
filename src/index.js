@@ -11,8 +11,8 @@ import middleware from './middleware';
 import {VotingContainer} from './Voting';
 
 const socket = io(`${location.protocol}//${location.hostname}:8090`);
+// const timerSocket = io(`${location.protocol}//${location.hostname}:3002`);
 
-// TODO: Change Streaming Units link for AMP
 // TODO: Add Timer
 
 const createStoreWithMiddleware = applyMiddleware(
@@ -24,9 +24,14 @@ const store = createStoreWithMiddleware(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-socket.on('state', state => 
+socket.on('state', state =>
   store.dispatch(Actions.setState(state))
 );
+
+// timerSocket.on('timersub', msg => {
+//   console.log('timer ' + msg);
+//   store.dispatch(Actions.setTimer(msg));
+// });
 
 ReactDOM.render(
   <Provider store={store}>

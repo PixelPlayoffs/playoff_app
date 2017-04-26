@@ -9,3 +9,7 @@ export function vote(entry) {
 export function next() {
     return {meta: {remote: true}, type: 'NEXT'}
 }
+
+export function setTimer(count) {
+    return {meta: {remote: true}, type: 'TIMER', count}
+}
