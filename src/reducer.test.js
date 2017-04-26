@@ -1,5 +1,5 @@
 import {List, Map, fromJS} from 'immutable';
-import Reducer from './reducer';
+import Reducer from './Reducer';
 import Tournament from './models/tournament';
 
 describe('reducer', () => {
